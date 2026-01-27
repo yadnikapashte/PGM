@@ -4,17 +4,18 @@ Contains all hyperparameters and settings for training and evaluation
 """
 
 import torch
+import os
 
 
 class Config:
     """Configuration parameters for the translation system"""
     
     # Model settings
-    MODEL_NAME = "bigscience/bloom-560m"
+    MODEL_NAME = "gpt2"
     DATASET_NAME = "michsethowusu/english-swahili_sentence-pairs"
     
     # Training hyperparameters
-    MAX_LENGTH = 128
+    MAX_LENGTH = 64
     BATCH_SIZE = 8
     LEARNING_RATE = 2e-5
     EPOCHS = 3
@@ -28,9 +29,22 @@ class Config:
     RANDOM_SEED = 42
     
     # Directory settings
-    SAVE_DIR = "./swahili_translation_model"
-    LOG_DIR = "./logs"
-    CHECKPOINT_DIR = "./checkpoints"
+    SAVE_DIR = "D:/swahili_translation_model"
+    LOG_DIR = "D:/logs"
+    CHECKPOINT_DIR = "D:/checkpoints"
+    
+    # Create directories if they don't exist
+    os.makedirs(SAVE_DIR, exist_ok=True)
+    os.makedirs(LOG_DIR, exist_ok=True)
+    os.makedirs(CHECKPOINT_DIR, exist_ok=True)
+    
+    # Cache directories (use D drive for large datasets)
+    HF_CACHE_DIR = "D:/huggingface_cache"
+    DATASET_CACHE_DIR = "D:/dataset_cache"
+    
+    # Create cache directories if they don't exist
+    os.makedirs(HF_CACHE_DIR, exist_ok=True)
+    os.makedirs(DATASET_CACHE_DIR, exist_ok=True)
     
     # Evaluation settings
     NUM_EVAL_SAMPLES = 200
