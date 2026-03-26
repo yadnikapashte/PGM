@@ -128,7 +128,7 @@ class TranslationTokenizer:
             remove_columns=test_dataset.column_names
         )
         
-        print("✓ Tokenization complete!")
+        print("[*] Tokenization complete!")
         print(f"  Train samples: {len(tokenized_train)}")
         print(f"  Val samples: {len(tokenized_val)}")
         print(f"  Test samples: {len(tokenized_test)}")

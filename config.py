@@ -11,14 +11,14 @@ class Config:
     """Configuration parameters for the translation system"""
     
     # Model settings
-    MODEL_NAME = "gpt2"
-    DATASET_NAME = "michsethowusu/english-swahili_sentence-pairs"
+    MODEL_NAME = "bigscience/bloom-560m"
+    DATASET_NAME = "yadnikapashte/english-swahili_sentence-pairs"
     
     # Training hyperparameters
     MAX_LENGTH = 64
     BATCH_SIZE = 8
     LEARNING_RATE = 2e-5
-    EPOCHS = 3
+    EPOCHS = 5
     WARMUP_STEPS = 500
     WEIGHT_DECAY = 0.01
     
@@ -29,19 +29,22 @@ class Config:
     RANDOM_SEED = 42
     
     # Directory settings
-    SAVE_DIR = "D:/swahili_translation_model"
-    LOG_DIR = "D:/logs"
-    CHECKPOINT_DIR = "D:/checkpoints"
+    SAVE_DIR = "swahili_translation_model"
+    LOG_DIR = "logs"
+    CHECKPOINT_DIR = "checkpoints"
+    PREPROCESSED_DATA_DIR = "preprocessed_data"
     
     # Create directories if they don't exist
     os.makedirs(SAVE_DIR, exist_ok=True)
     os.makedirs(LOG_DIR, exist_ok=True)
     os.makedirs(CHECKPOINT_DIR, exist_ok=True)
+    os.makedirs(PREPROCESSED_DATA_DIR, exist_ok=True)
+
     
-    # Cache directories (use D drive for large datasets)
-    HF_CACHE_DIR = "D:/huggingface_cache"
-    DATASET_CACHE_DIR = "D:/dataset_cache"
-    
+    # Cache directories (use local directory for datasets)
+    HF_CACHE_DIR = "./huggingface_cache"
+    DATASET_CACHE_DIR = "./dataset_cache"
+
     # Create cache directories if they don't exist
     os.makedirs(HF_CACHE_DIR, exist_ok=True)
     os.makedirs(DATASET_CACHE_DIR, exist_ok=True)

@@ -12,7 +12,7 @@ from data_preprocessing import DataPreprocessor
 from tokenization import TranslationTokenizer
 from model_training import TranslationModelTrainer
 from evaluation import TranslationEvaluator
-from inference import TranslationInference
+from inference_py import TranslationInference
 
 
 def run_complete_pipeline(skip_training=False, skip_evaluation=False):
@@ -79,6 +79,11 @@ def run_complete_pipeline(skip_training=False, skip_evaluation=False):
         evaluator = TranslationEvaluator()
         evaluator.load_model()
         evaluator.show_sample_translations(test_dataset, num_examples=5)
+        
+        # Generate comprehensive accuracy report
+        accuracy_results = evaluator.generate_accuracy_report(test_dataset)
+        
+        # Also calculate BLEU for backward compatibility
         results = evaluator.evaluate_bleu(test_dataset, show_progress=True)
         
         # Print final summary
@@ -86,12 +91,23 @@ def run_complete_pipeline(skip_training=False, skip_evaluation=False):
         print("FINAL RESULTS SUMMARY")
         print("="*60)
         print(f"BLEU Score: {results['bleu_score']:.2f}")
-        print(f"Target: > 25.0")
-        print(f"Status: {'✓ ACHIEVED' if results['bleu_score'] > 25.0 else '✗ NOT ACHIEVED'}")
+        print(f"Sentence Accuracy: {accuracy_results['sentence_accuracy']:.2f}%")
+        print(f"Word Accuracy: {accuracy_results['word_accuracy']:.2f}%")
+        print(f"Target BLEU: > 25.0")
+        print(f"Status: {'[OK] ACHIEVED' if results['bleu_score'] > 25.0 else '[!] NOT ACHIEVED'}")
         print(f"Samples evaluated: {results['num_samples']}")
         print("="*60)
+        
+        # Print log locations
+        print("\n" + "="*60)
+        print("EVALUATION LOGS SAVED")
+        print("="*60)
+        print(f"[LOG] Accuracy metrics: {evaluator.accuracy_log_file}")
+        print(f"[LOG] BLEU scores: {evaluator.bleu_log_file}")
+        print(f"[LOG] Confusion matrix: {evaluator.confusion_log_file}")
+        print("="*60)
     
-    print("\n✓ Pipeline complete!")
+    print("\n[OK] Pipeline complete!")
     print(f"\nModel saved to: {Config.SAVE_DIR}")
     print("You can now use the model for translation with inference.py")
 
